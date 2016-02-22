@@ -67,7 +67,7 @@ def delta():
         return 0
     for diff_file in diff_list:
         upload(dbx,'storage',"",diff_file)
-    return diff_list    
+    return diff_list
 def hello():
     print "hello"
 def upload_folder():

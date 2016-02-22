@@ -1,4 +1,4 @@
 ---
 applications:
 - name: FoodieStorage
-  memory: 2GB
+  memory: 700MB
