@@ -9,8 +9,7 @@ from PIL import Image
 
 app = Flask(__name__)
 folder_name = os.getcwd()+"/storage"
-if not os.path.exists(folder_name):
-    os.makedirs(folder_name)
+port = os.getenv('VCAP_APP_PORT', '8080')
 
 app.config["UPLOAD_FOLDER"]='storage/'
 app.config["ALLOWED_EXTENSION"]=set(['jpg','jpeg','png','gif','bmp'])
@@ -35,6 +34,9 @@ def resize(filename):
     file_path = app.config["UPLOAD_FOLDER"]+filename
     image = Image.open(file_path)
     resize_img = image.save(app.config["UPLOAD_FOLDER"]+filename+"_75","JPEG",quality=75)
+@app.route('/')
+def hello_world():
+    return 'Hello World! I am running on port ' + str(port)
 
 @app.route('/upload',methods=["POST"])
 def upload():
@@ -61,12 +63,11 @@ def load_image(filename):
         return Response(io.getvalue(),mimetype=mimetype)
     except IOError:
         abort(404)
-port = os.getenv('VCAP_APP_PORT', '5000')
+
 if __name__ == '__main__':
     app.run(
         host="0.0.0.0",
-        port=int(port),
-        debug=True
+        port=int(port)
     )
 
 
