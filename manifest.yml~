@@ -1,4 +1,4 @@
 ---
 applications:
-- name: hello-world-flask
-  memory: 128M
+- name: FoodieStorage
+  memory: 2GB
