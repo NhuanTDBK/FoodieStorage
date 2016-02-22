@@ -2,7 +2,6 @@ import tempfile
 import json,base64,os
 from flask import Flask, request,Response,abort, redirect, url_for,jsonify
 from hashlib import md5
-import Image
 import StringIO
 import magic
 from PIL import Image
