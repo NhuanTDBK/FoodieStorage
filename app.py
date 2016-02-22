@@ -4,6 +4,7 @@ from flask import Flask, request,Response,abort, redirect, url_for,jsonify
 from hashlib import md5
 import StringIO
 import magic
+from dropbox_sync import *
 from PIL import Image
 
 app = Flask(__name__)
@@ -44,6 +45,9 @@ def upload():
     if file:
         file.save(os.path.join(app.config['UPLOAD_FOLDER'],hash_name))
         resize(file.filename)
+        print "Start sync %s" % hash_name
+        upload(client, "storage", "", hash_name)
+        print "Finish sync"
         return jsonify({"filename": hash_name})
     else:
         return jsonify({"key":"Error cannot save"})
@@ -63,7 +67,16 @@ def load_image(filename):
     except IOError:
         abort(404)
 
+
+@app.route('/sync')
+def sync_to_dropbox():
+    # upload_folder()
+    delta()
 if __name__ == '__main__':
+    # try:
+    #     # sync_folder()
+    # except Exception as e:
+    #     print "Error"
     app.run(
         host="0.0.0.0",
         port=int(port)
