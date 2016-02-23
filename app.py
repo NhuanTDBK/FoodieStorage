@@ -71,8 +71,12 @@ def load_image(filename):
 
 @app.route('/sync')
 def sync_to_dropbox():
-    # upload_folder()
-    delta()
+    try:
+        thread.start_new(sync_folder, ())
+    except Exception as e:
+        print e
+    return jsonify({"request": "activate sync tasks"})
+    # delta()
 if __name__ == '__main__':
     # try:
     #     # sync_folder()

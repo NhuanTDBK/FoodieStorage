@@ -76,9 +76,13 @@ def delta():
 
 def sync_folder():
     dbx = client
+    current_list = set(os.listdir("storage"))
     server_list = set([t.name for t in dbx.files_list_folder("/storage").entries])
+    diff_list = server_list - current_list
+    if (len(diff_list) == 0):
+        return 0
     print "Retrieving file list"
-    for index, file_name in enumerate(server_list):
+    for index, file_name in enumerate(diff_list):
         print "%d / %d" % (index + 1, len(server_list))
         file_full_name = "%s/storage/%s" % (os.getcwd(), file_name)
         dbx.files_download_to_file(file_full_name, "/storage/" + file_name)
