@@ -40,17 +40,20 @@ def hello_world():
 
 @app.route('/upload',methods=["POST"])
 def upload():
-    file = request.files["file"]
-    hash_name = md5(file.filename).hexdigest()
-    if file:
-        file.save(os.path.join(app.config['UPLOAD_FOLDER'],hash_name))
-        resize(file.filename)
-        print "Start sync %s" % hash_name
-        upload(client, "storage", "", hash_name)
-        print "Finish sync"
-        return jsonify({"filename": hash_name})
-    else:
-        return jsonify({"key":"Error cannot save"})
+    try:
+        file = request.files["file"]
+        hash_name = md5(file.filename).hexdigest()
+        if file:
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], hash_name))
+            resize(file.filename)
+            print "Start sync %s" % hash_name
+            upload(client, "storage", "", hash_name)
+            print "Finish sync"
+            return jsonify({"filename": hash_name})
+        else:
+            return jsonify({"key": "Error cannot save"})
+    except Exception as e:
+        print e
 
 @app.route('/<path:filename>',methods=["GET"])
 def load_image(filename):
