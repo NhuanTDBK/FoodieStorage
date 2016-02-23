@@ -1,8 +1,5 @@
-import tempfile
-import json,base64,os
-from flask import Flask, request,Response,abort, redirect, url_for,jsonify
+from flask import Flask, request, Response, abort, jsonify
 from hashlib import md5
-import StringIO
 import magic
 from dropbox_sync import *
 from PIL import Image
@@ -58,17 +55,16 @@ def upload_controller():
 
 @app.route('/<path:filename>',methods=["GET"])
 def load_image(filename):
-
-    file_path = app.config["UPLOAD_FOLDER"]+filename
-    mimetype = magic.from_file(file_path,mime=True)
-    ext = mimetype.rsplit('/',1)[1]
     try:
-
+        file_path = app.config["UPLOAD_FOLDER"] + filename
+        mimetype = magic.from_file(file_path, mime=True)
+        ext = mimetype.rsplit('/', 1)[1]
         im = Image.open(file_path)
-        io = StringIO.StringIO()
+        io = StringIO()
         im.save(io,format=ext.capitalize())
         return Response(io.getvalue(),mimetype=mimetype)
-    except IOError:
+    except Exception as e:
+        print e
         abort(404)
 
 
