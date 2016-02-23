@@ -45,7 +45,7 @@ def upload():
         hash_name = md5(file.filename).hexdigest()
         if file:
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], hash_name))
-            resize(file.filename)
+            resize(hash_name)
             print "Start sync %s" % hash_name
             upload(client, "storage", "", hash_name)
             print "Finish sync"
