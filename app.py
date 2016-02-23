@@ -6,6 +6,7 @@ import StringIO
 import magic
 from dropbox_sync import *
 from PIL import Image
+import thread
 
 app = Flask(__name__)
 folder_name = os.getcwd()+"/storage"
@@ -39,7 +40,7 @@ def hello_world():
     return 'Hello World! I am running on port ' + str(port)
 
 @app.route('/upload',methods=["POST"])
-def upload():
+def upload_controller():
     try:
         file = request.files["file"]
         hash_name = md5(file.filename).hexdigest()
@@ -47,7 +48,7 @@ def upload():
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], hash_name))
             resize(hash_name)
             print "Start sync %s" % hash_name
-            upload(client, "storage", "", hash_name)
+            thread.start_new(upload, (client, "storage", "", hash_name))
             print "Finish sync"
             return jsonify({"filename": hash_name})
         else:
