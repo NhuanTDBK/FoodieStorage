@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="2f78e93a-6773-4c5e-9c00-26536ba8ec73" name="Default" comment="Look up error">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app.py" afterPath="$PROJECT_DIR$/app.py" />
     </list>
     <ignored path="storage_service.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -315,7 +314,13 @@
       <option name="project" value="LOCAL" />
       <updated>1456191836923</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Look up error">
+      <created>1456192245687</created>
+      <option name="number" value="00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1456192245687</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="ToolWindowManager">
