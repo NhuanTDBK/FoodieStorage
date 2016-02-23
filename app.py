@@ -31,7 +31,7 @@ def resize(filename):
     #fad
     file_path = app.config["UPLOAD_FOLDER"]+filename
     image = Image.open(file_path)
-    resize_img = image.save(app.config["UPLOAD_FOLDER"]+filename+"_75","JPEG",quality=75)
+    resize_img = image.save(app.config["UPLOAD_FOLDER"] + filename, "JPEG", quality=75)
 @app.route('/')
 def hello_world():
     return 'Hello World! I am running on port ' + str(port)
@@ -47,7 +47,8 @@ def upload_controller():
             print "Start sync %s" % hash_name
             thread.start_new(upload, (client, "storage", "", hash_name))
             print "Finish sync"
-            return jsonify({"filename": hash_name})
+            photo_link = request.host + "/" + hash_name
+            return jsonify({"link": photo_link})
         else:
             return jsonify({"key": "Error cannot save"})
     except Exception as e:
